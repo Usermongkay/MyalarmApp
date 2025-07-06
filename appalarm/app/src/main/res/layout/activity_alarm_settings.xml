@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pengingat Awal (H-)"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/btn_h_minus_kurang"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="-"/>
+
+        <TextView
+            android:id="@+id/text_view_h_minus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/btn_h_minus_tambah"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="+"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="hari sebelum acara"
+        android:layout_gravity="center_horizontal"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jam Alarm Pengingat Awal"
+        android:layout_marginTop="24dp"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"/>
+
+    <Button
+        android:id="@+id/btn_pilih_jam_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Pilih Jam Alarm"/>
+
+    <Button
+        android:id="@+id/btn_simpan_pengaturan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Simpan Pengaturan"/>
+
+</LinearLayout>
+

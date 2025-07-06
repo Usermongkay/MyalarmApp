@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Alarm Pesanan</string>
+	<string name="navigation_drawer_open">Buka menu navigasi</string>
+	<string name="navigation_drawer_close">Tutup menu navigasi</string>
+</resources>
+
+

@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.My.Alarm">
+
+	<application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher_background"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:requestLegacyExternalStorage="true">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".EditorActivity"
+            android:label="Detail Pesanan"
+            android:parentActivityName=".MainActivity">
+        </activity>
+		
+		<activity
+			android:name=".TesSuaraActivity"
+			android:label="Tes Suara TTS"
+			android:parentActivityName=".MainActivity">
+		</activity>
+
+        <activity
+            android:name=".AlarmSettingsActivity"
+            android:label="Pengaturan"
+            android:parentActivityName=".MainActivity">
+        </activity>
+
+        <activity
+            android:name=".HistoryActivity"
+            android:label="Riwayat Pesanan"
+            android:parentActivityName=".MainActivity">
+        </activity>
+
+        <receiver 
+            android:name=".service.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false">
+        </receiver>
+
+        <service 
+            android:name=".service.TtsService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback">
+        </service>
+		
+		        <receiver 
+            android:name=".service.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false">
+        </receiver>
+
+        <receiver
+            android:name=".service.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+
+        <service 
+            android:name=".service.TtsService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback">
+        </service>
+
+
+    </application>
+
+
+
+
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+	<uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<uses-permission android:name="android.permission.VIBRATE" />
+
+
+
+</manifest>
+
