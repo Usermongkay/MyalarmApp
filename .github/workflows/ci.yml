@@ -1,0 +1,34 @@
+# Nama workflow
+name: Node.js CI
+
+# Pemicu: dijalankan saat ada push ke branch main
+on:
+  push:
+    branches: [ "main" ]
+
+# Daftar pekerjaan yang akan dijalankan
+jobs:
+  # Nama job (bisa apa saja)
+  build:
+    # Menggunakan runner Ubuntu versi terbaru
+    runs-on: ubuntu-latest
+
+    # Langkah-langkah eksekusi
+    steps:
+      # 1. Mengunduh kode dari repositori ke runner
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Setup lingkungan Node.js versi 20
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      # 3. Install dependencies (seperti "npm install")
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Menjalankan skrip tes (seperti "npm test")
+      - name: Run tests
+        run: npm test
