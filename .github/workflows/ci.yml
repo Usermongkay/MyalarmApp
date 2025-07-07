@@ -10,6 +10,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    # Menetapkan direktori kerja default untuk semua 'run' steps di job ini
+    defaults:
+      run:
+        working-directory: ./MyalarmApp
+
     steps:
       # 1. Checkout kode dari repositori
       - name: Checkout code
@@ -20,14 +25,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-          cache: 'npm' # Opsi ini mempercepat instalasi di masa depan
+          # Beri tahu cache di mana harus mencari package-lock.json
+          cache: 'npm'
+          cache-dependency-path: MyalarmApp/package-lock.json
 
       # 3. Install dependencies
-      # Tidak perlu working-directory karena package.json ada di root
+      # 'working-directory' tidak perlu ditulis lagi karena sudah diatur di 'defaults'
       - name: Install dependencies
         run: npm install
 
       # 4. Menjalankan skrip tes (jika ada)
-      # Tidak perlu working-directory
       - name: Run tests
         run: npm test
