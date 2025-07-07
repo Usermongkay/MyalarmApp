@@ -54,10 +54,13 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.PesananV
             return; // Jika cursor tidak bisa pindah ke posisi, hentikan
         }
 
-        // Ambil data dari cursor
-        String teksPesanan = mCursor.getString(mCursor.getColumnIndex(DbHelper.COLUMN_TEXT));
-        long waktuMillis = mCursor.getLong(mCursor.getColumnIndex(DbHelper.COLUMN_DATETIME));
+        // Ambil data dari cursor dengan validasi
+        int textColumnIndex = mCursor.getColumnIndex(DbHelper.COLUMN_TEXT);
+        int datetimeColumnIndex = mCursor.getColumnIndex(DbHelper.COLUMN_DATETIME);
 
+        String teksPesanan = textColumnIndex != -1 ? mCursor.getString(textColumnIndex) : "";
+        long waktuMillis = datetimeColumnIndex != -1 ? mCursor.getLong(datetimeColumnIndex) : 0;
+        }
         // Format timestamp (long) menjadi tanggal dan jam yang mudah dibaca
         SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy, HH:mm", new Locale("id", "ID"));
         String tanggalFormatted = formatter.format(new Date(waktuMillis));
