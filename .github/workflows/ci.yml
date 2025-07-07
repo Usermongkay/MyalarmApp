@@ -10,6 +10,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    # Menetapkan direktori kerja default untuk semua 'run' steps di job ini
+    defaults:
+      run:
+        working-directory: ./appalarm
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -21,9 +26,9 @@ jobs:
           distribution: 'temurin'
 
       - name: Grant execute permission for gradlew
+        # Perintah ini sekarang akan berjalan di dalam folder 'appalarm'
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        # Perintah ini akan mencoba meng-compile kode Android Anda.
-        # Jika ada error di kode Java atau XML, akan terlihat di sini.
+        # Perintah ini juga akan berjalan di dalam folder 'appalarm'
         run: ./gradlew build
