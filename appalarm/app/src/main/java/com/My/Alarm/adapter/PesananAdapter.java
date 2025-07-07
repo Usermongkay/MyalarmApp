@@ -60,7 +60,7 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.PesananV
 
         String teksPesanan = textColumnIndex != -1 ? mCursor.getString(textColumnIndex) : "";
         long waktuMillis = datetimeColumnIndex != -1 ? mCursor.getLong(datetimeColumnIndex) : 0;
-        }
+
         // Format timestamp (long) menjadi tanggal dan jam yang mudah dibaca
         SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy, HH:mm", new Locale("id", "ID"));
         String tanggalFormatted = formatter.format(new Date(waktuMillis));
@@ -86,5 +86,3 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.PesananV
         }
     }
 }
-
-
