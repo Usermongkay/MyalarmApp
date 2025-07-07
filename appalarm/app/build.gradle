@@ -1,22 +1,41 @@
 apply plugin: 'com.android.application'
 
 android {
+    // Tambahkan namespace untuk mengatasi warning deprecated
+    namespace 'com.My.Alarm'
+    
     compileSdkVersion 33
+    
     defaultConfig {
         applicationId "com.My.Alarm"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 1
         versionName "1.0"
+        
+        // Tambahkan untuk testing
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     
-    // TAMBAHKAN BLOK INI
+    // Lint configuration - keep checking but allow warnings
+    lintOptions {
+        abortOnError true  // Keep this true to catch real errors
+        warningsAsErrors false  // Allow warnings but stop on errors
+        checkReleaseBuilds true  // Check release builds
+        // Disable specific checks that are not critical
+        disable 'MissingTranslation', 'ExtraTranslation'
+    }
+    
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     
     buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -25,8 +44,18 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-	implementation 'com.google.android.material:material:1.0.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    
+    // Update ke versi yang lebih stable dan compatible
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    
+    // Tambahkan dependencies yang mungkin dibutuhkan
+    implementation 'androidx.recyclerview:recyclerview:1.3.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    
+    // Testing dependencies (optional)
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
-
