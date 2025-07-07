@@ -24,11 +24,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # Langkah baru untuk menginstal Gradle di server
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      # Menggunakan 'gradle' langsung, bukan './gradlew'
       - name: Build with Gradle
         run: gradle build
 
+      - name: Upload APK as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: appalarm/app/build/outputs/apk/debug/app-debug.apk
