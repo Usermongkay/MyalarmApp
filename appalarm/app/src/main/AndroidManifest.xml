@@ -43,19 +43,8 @@
             android:parentActivityName=".MainActivity">
         </activity>
 
-        <receiver 
-            android:name=".service.AlarmReceiver"
-            android:enabled="true"
-            android:exported="false">
-        </receiver>
-
-        <service 
-            android:name=".service.TtsService"
-            android:exported="false"
-            android:foregroundServiceType="mediaPlayback">
-        </service>
 		
-		        <receiver 
+	<receiver 
             android:name=".service.AlarmReceiver"
             android:enabled="true"
             android:exported="false">
