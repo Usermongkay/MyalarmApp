@@ -25,7 +25,7 @@ public class DailyCheckReceiver extends BroadcastReceiver {
                 DbHelper.TABLE_PESANAN,
                 null,
                 DbHelper.COLUMN_STATUS + " =?",
-                new String{"aktif"},
+                new String[]{"aktif"},
                 null, null, null
         );
 
@@ -47,9 +47,7 @@ public class DailyCheckReceiver extends BroadcastReceiver {
                 calHariH.setTimeInMillis(waktuPesanan);
 
                 // Cek apakah alarm H- atau Hari-H jatuh pada hari ini
-                if (isToday(calAlarm) |
-
-| isToday(calHariH)) {
+                if (isToday(calAlarm) || isToday(calHariH)) {
                     // Jika ya, setel alarm yang sesungguhnya
                     if (isToday(calAlarm)) {
                         AlarmScheduler.setAlarm(context, id, calAlarm.getTimeInMillis(), "Pengingat: " + teks, audioPath);
@@ -60,7 +58,7 @@ public class DailyCheckReceiver extends BroadcastReceiver {
                 }
             }
         } finally {
-            if (cursor!= null) {
+            if (cursor != null) {
                 cursor.close();
             }
             db.close();
@@ -73,4 +71,3 @@ public class DailyCheckReceiver extends BroadcastReceiver {
                today.get(Calendar.DAY_OF_YEAR) == targetCal.get(Calendar.DAY_OF_YEAR);
     }
 }
-
