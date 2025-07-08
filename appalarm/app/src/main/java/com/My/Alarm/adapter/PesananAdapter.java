@@ -55,8 +55,8 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.PesananV
         }
 
         // Ambil data dari cursor dengan validasi
-        int textColumnIndex = mCursor.getColumnIndex(DbHelper.COLUMN_TEXT);
-        int datetimeColumnIndex = mCursor.getColumnIndex(DbHelper.COLUMN_DATETIME);
+        int textColumnIndex = mCursor.getColumnIndex(DbHelper.COLUMN_TEKS);
+        int datetimeColumnIndex = mCursor.getColumnIndex(DbHelper.COLUMN_WAKTU);
 
         String teksPesanan = textColumnIndex != -1 ? mCursor.getString(textColumnIndex) : "";
         long waktuMillis = datetimeColumnIndex != -1 ? mCursor.getLong(datetimeColumnIndex) : 0;
