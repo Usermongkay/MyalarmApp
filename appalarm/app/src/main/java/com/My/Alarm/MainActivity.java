@@ -162,13 +162,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     private void loadPesanan() {
         Cursor cursor = mDatabase.query(
-            DbHelper.TABLE_NAME,
+            DbHelper.TABLE_PESANAN,
             null,
             DbHelper.COLUMN_STATUS + " = ?",
             new String[]{"upcoming"},
             null,
             null,
-            DbHelper.COLUMN_DATETIME + " ASC"
+            DbHelper.COLUMN_WAKTU + " ASC"
         );
 
         if (mAdapter == null) {
