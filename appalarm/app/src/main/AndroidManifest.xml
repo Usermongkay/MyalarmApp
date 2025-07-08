@@ -1,15 +1,21 @@
 <?xml version='1.0' encoding='utf-8'?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     
+    <!-- Permissions -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
-	<application
+    <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher_background"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:requestLegacyExternalStorage="true">
 
+        <!-- Activities -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -24,12 +30,12 @@
             android:label="Detail Pesanan"
             android:parentActivityName=".MainActivity">
         </activity>
-		
-		<activity
-			android:name=".TesSuaraActivity"
-			android:label="Tes Suara TTS"
-			android:parentActivityName=".MainActivity">
-		</activity>
+        
+        <activity
+            android:name=".TesSuaraActivity"
+            android:label="Tes Suara TTS"
+            android:parentActivityName=".MainActivity">
+        </activity>
 
         <activity
             android:name=".AlarmSettingsActivity"
@@ -43,18 +49,17 @@
             android:parentActivityName=".MainActivity">
         </activity>
 
-		
-	<receiver 
+        <!-- Receivers -->
+        <receiver 
             android:name=".service.AlarmReceiver"
             android:enabled="true"
             android:exported="false">
-            
-    <receiver
+        </receiver>
+
+        <receiver
             android:name=".service.DailyCheckReceiver"
             android:enabled="true"
             android:exported="false"/>
-        
-        </receiver>
 
         <receiver
             android:name=".service.BootReceiver"
@@ -65,26 +70,13 @@
             </intent-filter>
         </receiver>
 
-
+        <!-- Services -->
         <service 
             android:name=".service.TtsService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback">
         </service>
 
-
     </application>
 
-
-
-
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-	<uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-	<uses-permission android:name="android.permission.VIBRATE" />
-
-
-
 </manifest>
-
