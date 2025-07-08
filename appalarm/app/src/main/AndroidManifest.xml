@@ -48,6 +48,12 @@
             android:name=".service.AlarmReceiver"
             android:enabled="true"
             android:exported="false">
+            
+    <receiver
+            android:name=".service.DailyCheckReceiver"
+            android:enabled="true"
+            android:exported="false"/>
+        
         </receiver>
 
         <receiver
