@@ -54,9 +54,7 @@ public class EditorActivity extends AppCompatActivity {
             public void onInit(int status) {
                 if (status == TextToSpeech.SUCCESS) {
                     int result = mTTS.setLanguage(new Locale("id", "ID"));
-                    if (result == TextToSpeech.LANG_MISSING_DATA |
-
-| result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "Bahasa Indonesia tidak didukung.");
                     }
                 } else {
