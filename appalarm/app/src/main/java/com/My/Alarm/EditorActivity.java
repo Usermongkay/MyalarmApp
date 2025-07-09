@@ -88,51 +88,51 @@ public class EditorActivity extends AppCompatActivity {
     }
 
     private void savePesananKeDatabase() {
-        String teksPesanan = mEditTextPesanan.getText().toString().trim();
-        if (teksPesanan.isEmpty()) {
-            Toast.makeText(this, "Teks pesanan tidak boleh kosong.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Ambil pengaturan H- dari SharedPreferences
-        SharedPreferences prefs = getSharedPreferences(AlarmSettingsActivity.PREFS_NAME, Context.MODE_PRIVATE);
-        int hMinus = prefs.getInt(AlarmSettingsActivity.H_MINUS_KEY, 1); // Default H-1
-
-        // Buat kalimat lengkap untuk TTS
-        SimpleDateFormat formatterTanggal = new SimpleDateFormat("dd MMMM yyyy", new Locale("id", "ID"));
-        String tanggalFormatted = formatterTanggal.format(mCalendar.getTime());
-        String teksLengkapUntukTTS = teksPesanan + ". Pada tanggal " + tanggalFormatted;
-
-        // Buat file audio
-        String audioFileName = "pesanan_" + UUID.randomUUID().toString() + ".mp3";
-        File audioFile = new File(getExternalFilesDir(null), audioFileName);
-        String audioPath = audioFile.getAbsolutePath();
-        
-        int result = mTTS.synthesizeToFile(teksLengkapUntukTTS, null, audioFile, "pesananAudio");
-
-        if (result!= TextToSpeech.SUCCESS) {
-            Toast.makeText(this, "Gagal membuat file audio.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Simpan semua data ke database
-        ContentValues cv = new ContentValues();
-        cv.put(DbHelper.COLUMN_TEKS, teksPesanan);
-        cv.put(DbHelper.COLUMN_WAKTU, mCalendar.getTimeInMillis());
-        cv.put(DbHelper.COLUMN_STATUS, "aktif");
-        cv.put(DbHelper.COLUMN_H_MINUS, hMinus);
-        cv.put(DbHelper.COLUMN_AUDIO_PATH, audioPath);
-
-        long newRowId = mDatabase.insert(DbHelper.TABLE_PESANAN, null, cv);
-
-        if (newRowId!= -1) {
-            Toast.makeText(this, "Pesanan berhasil disimpan!", Toast.LENGTH_LONG).show();
-            finish(); // Kembali ke MainActivity
-        } else {
-            Toast.makeText(this, "Gagal menyimpan pesanan ke database.", Toast.LENGTH_SHORT).show();
-        }
+    String teksPesanan = mEditTextPesanan.getText().toString().trim();
+    if (teksPesanan.isEmpty()) {
+        Toast.makeText(this, "Teks pesanan tidak boleh kosong.", Toast.LENGTH_SHORT).show();
+        return;
     }
 
+    SharedPreferences prefs = getSharedPreferences(AlarmSettingsActivity.PREFS_NAME, Context.MODE_PRIVATE);
+    int hMinus = prefs.getInt(AlarmSettingsActivity.H_MINUS_KEY, 1);
+
+    SimpleDateFormat formatterTanggal = new SimpleDateFormat("dd MMMM yyyy", new Locale("id", "ID"));
+    String tanggalFormatted = formatterTanggal.format(mCalendar.getTime());
+    String teksLengkapUntukTTS = teksPesanan + ". Pada tanggal " + tanggalFormatted;
+
+    String audioFileName = "pesanan_" + UUID.randomUUID().toString() + ".mp3";
+    File audioFile = new File(getExternalFilesDir(null), audioFileName);
+    String audioPath = audioFile.getAbsolutePath();
+
+    int result = mTTS.synthesizeToFile(teksLengkapUntukTTS, null, audioFile, "pesananAudio");
+
+    if (result != TextToSpeech.SUCCESS) {
+        Toast.makeText(this, "Gagal membuat file audio.", Toast.LENGTH_SHORT).show();
+        return;
+    }
+
+    ContentValues cv = new ContentValues();
+    cv.put(DbHelper.COLUMN_TEKS, teksPesanan);
+    cv.put(DbHelper.COLUMN_WAKTU, mCalendar.getTimeInMillis());
+    cv.put(DbHelper.COLUMN_STATUS, "aktif");
+    cv.put(DbHelper.COLUMN_H_MINUS, hMinus);
+    cv.put(DbHelper.COLUMN_AUDIO_PATH, audioPath);
+
+    long newRowId = mDatabase.insert(DbHelper.TABLE_PESANAN, null, cv);
+
+    if (newRowId != -1) {
+        // ---- INI BAGIAN PENTING YANG DITAMBAHKAN ----
+        // Langsung setel alarm setelah disimpan
+        AlarmScheduler.setAlarm(this, newRowId, mCalendar.getTimeInMillis(), teksPesanan, audioPath);
+        // ---------------------------------------------
+
+        Toast.makeText(this, "Pesanan berhasil disimpan!", Toast.LENGTH_LONG).show();
+        finish(); 
+    } else {
+        Toast.makeText(this, "Gagal menyimpan pesanan ke database.", Toast.LENGTH_SHORT).show();
+    }
+}
     // --- Metode showDatePickerDialog, showTimePickerDialog, dan updateButtonsText tetap sama ---
     // --- Tidak perlu ada lagi metode setAlarm() di sini ---
 
