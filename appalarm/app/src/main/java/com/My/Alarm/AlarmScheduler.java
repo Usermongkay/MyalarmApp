@@ -28,7 +28,7 @@ public class AlarmScheduler {
             context,
             (int) uniqueId, // ID harus unik, kita cast dari long
             intent,
-            Pending_intent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+            Pending_Intent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
         // Periksa izin untuk Android 12+
