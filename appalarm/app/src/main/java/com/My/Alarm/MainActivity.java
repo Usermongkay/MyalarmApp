@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             DbHelper.TABLE_PESANAN,
             null,
             DbHelper.COLUMN_STATUS + " = ?",
-            new String[]{"upcoming"},
+            new String[]{"aktif"},
             null,
             null,
             DbHelper.COLUMN_WAKTU + " ASC"
