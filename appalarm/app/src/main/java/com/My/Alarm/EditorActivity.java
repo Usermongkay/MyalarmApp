@@ -88,15 +88,17 @@ public class EditorActivity extends AppCompatActivity {
     }
 
     private void savePesananKeDatabase() {
-    String teksPesanan = mEditTextPesanan.getText().toString().trim();
-    if (teksPesanan.isEmpty()) {
-        Toast.makeText(this, "Teks pesanan tidak boleh kosong.", Toast.LENGTH_SHORT).show();
+        String teksPesanan = mEditTextPesanan.getText().toString().trim();
+        if (teksPesanan.isEmpty()) {
+            Toast.makeText(this, "Teks pesanan tidak boleh kosong.", Toast.LENGTH_SHORT).show();
         return;
     }
 
+    // Ambil pengaturan H- dari SharedPreferences
     SharedPreferences prefs = getSharedPreferences(AlarmSettingsActivity.PREFS_NAME, Context.MODE_PRIVATE);
-    int hMinus = prefs.getInt(AlarmSettingsActivity.H_MINUS_KEY, 1);
+    int hMinus = prefs.getInt(AlarmSettingsActivity.H_MINUS_KEY, 1); // Default H-1
 
+    // ... (kode untuk membuat file audio tetap sama) ...
     SimpleDateFormat formatterTanggal = new SimpleDateFormat("dd MMMM yyyy", new Locale("id", "ID"));
     String tanggalFormatted = formatterTanggal.format(mCalendar.getTime());
     String teksLengkapUntukTTS = teksPesanan + ". Pada tanggal " + tanggalFormatted;
@@ -111,10 +113,11 @@ public class EditorActivity extends AppCompatActivity {
         Toast.makeText(this, "Gagal membuat file audio.", Toast.LENGTH_SHORT).show();
         return;
     }
+    // ... (akhir dari kode audio) ...
 
     ContentValues cv = new ContentValues();
     cv.put(DbHelper.COLUMN_TEKS, teksPesanan);
-    cv.put(DbHelper.COLUMN_WAKTU, mCalendar.getTimeInMillis());
+    cv.put(DbHelper.COLUMN_WAKTU, mCalendar.getTimeInMillis()); // Tetap simpan waktu asli (Hari-H)
     cv.put(DbHelper.COLUMN_STATUS, "aktif");
     cv.put(DbHelper.COLUMN_H_MINUS, hMinus);
     cv.put(DbHelper.COLUMN_AUDIO_PATH, audioPath);
@@ -122,17 +125,24 @@ public class EditorActivity extends AppCompatActivity {
     long newRowId = mDatabase.insert(DbHelper.TABLE_PESANAN, null, cv);
 
     if (newRowId != -1) {
-        // ---- INI BAGIAN PENTING YANG DITAMBAHKAN ----
-        // Langsung setel alarm setelah disimpan
-        AlarmScheduler.setAlarm(this, newRowId, mCalendar.getTimeInMillis(), teksPesanan, audioPath);
-        // ---------------------------------------------
+        // ---- INI LOGIKA BARU YANG BENAR ----
+        // Buat kalender baru untuk waktu alarm H-
+        Calendar alarmTime = Calendar.getInstance();
+        alarmTime.setTimeInMillis(mCalendar.getTimeInMillis()); // Mulai dari waktu Hari-H
+        alarmTime.add(Calendar.DAY_OF_YEAR, -hMinus); // Kurangi harinya sesuai pengaturan H-
+
+        // Setel alarm menggunakan waktu H- yang sudah dihitung
+        // Kita juga tambahkan "Pengingat: " agar pesannya berbeda
+        AlarmScheduler.setAlarm(this, newRowId, alarmTime.getTimeInMillis(), "Pengingat: " + teksPesanan, audioPath);
+        // ------------------------------------
 
         Toast.makeText(this, "Pesanan berhasil disimpan!", Toast.LENGTH_LONG).show();
-        finish(); 
+        finish();
     } else {
         Toast.makeText(this, "Gagal menyimpan pesanan ke database.", Toast.LENGTH_SHORT).show();
     }
 }
+
     // --- Metode showDatePickerDialog, showTimePickerDialog, dan updateButtonsText tetap sama ---
     // --- Tidak perlu ada lagi metode setAlarm() di sini ---
 
